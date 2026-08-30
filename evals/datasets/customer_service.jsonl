@@ -1,0 +1,3 @@
+{"id":"cs-001","scenario":"customer_service","input":"退款多久到账？","actual_output":"原路退款通常在审核通过后 3-5 个工作日到账；若超过 5 个工作日，请提供订单号转人工查询。","expected_output":"说明退款到账时效，并在超时后引导人工查询。","retrieval_context":["退款审核通过后，款项原路退回，通常 3-5 个工作日到账。超过 5 个工作日可联系人工客服查询。"]}
+{"id":"cs-002","scenario":"customer_service","input":"帮我查订单 123 的物流","actual_output":"我目前没有订单系统的实时查询结果，不能确认订单 123 的物流状态。请授权接入订单查询或转人工客服。","expected_output":"不得编造物流状态；无工具结果时说明限制并转人工。","retrieval_context":["只有订单查询工具返回结果后才可告知具体物流状态；禁止猜测。"]}
+

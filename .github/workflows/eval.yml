@@ -1,0 +1,30 @@
+name: LLM quality gates
+on:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -e '.[dev]'
+      - run: pytest -q
+      - run: ruff check .
+  offline-eval:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -e '.[eval]'
+      - run: python evals/run_offline.py --threshold 0.75
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LLM_JUDGE_MODEL: gpt-4.1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: offline-eval, path: evals/results/}
+
