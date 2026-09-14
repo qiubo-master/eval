@@ -3,7 +3,7 @@ from functools import lru_cache
 from fastapi import FastAPI, HTTPException
 
 from .config import get_settings
-from .experiments import Experiment, PROMPTS
+from .experiments import PROMPTS, Experiment
 from .llm import LLMClient
 from .models import ChatRequest, ChatResponse, FeedbackRequest
 from .observability import Observability

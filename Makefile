@@ -7,7 +7,7 @@ api:
 	uvicorn llm_eval_system.api:app --reload
 
 test:
-	pytest -q
+	PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest -q
 
 lint:
 	ruff check .

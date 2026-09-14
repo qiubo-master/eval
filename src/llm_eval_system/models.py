@@ -2,7 +2,6 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-
 Scenario = Literal[
     "customer_service",
     "operations_agent",

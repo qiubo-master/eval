@@ -7,7 +7,8 @@ from statistics import mean
 from deepeval import evaluate
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
-from ragas import EvaluationDataset, SingleTurnSample, evaluate as ragas_evaluate
+from ragas import EvaluationDataset, SingleTurnSample
+from ragas import evaluate as ragas_evaluate
 from ragas.llms import llm_factory
 from ragas.metrics import Faithfulness, ResponseRelevancy
 

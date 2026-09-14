@@ -1,6 +1,7 @@
+from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Any, Iterator
+from typing import Any
 
 from .config import Settings
 
@@ -38,19 +39,21 @@ class Observability:
 
         from langfuse import propagate_attributes
 
-        with self.client.start_as_current_observation(
-            as_type="generation",
-            name=name,
-            input=input,
-            metadata=metadata,
-            trace_context={"trace_id": trace_id},
-        ) as generation:
-            with propagate_attributes(user_id=user_id, session_id=session_id, metadata=metadata):
-                try:
-                    yield TraceHandle(generation.trace_id, generation)
-                except Exception as exc:
-                    generation.update(level="ERROR", status_message=str(exc))
-                    raise
+        with (
+            self.client.start_as_current_observation(
+                as_type="generation",
+                name=name,
+                input=input,
+                metadata=metadata,
+                trace_context={"trace_id": trace_id},
+            ) as generation,
+            propagate_attributes(user_id=user_id, session_id=session_id, metadata=metadata),
+        ):
+            try:
+                yield TraceHandle(generation.trace_id, generation)
+            except Exception as exc:
+                generation.update(level="ERROR", status_message=str(exc))
+                raise
 
     def end(self, handle: TraceHandle, *, output: str, model: str) -> None:
         if handle.generation is not None:

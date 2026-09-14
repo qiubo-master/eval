@@ -1,5 +1,6 @@
-from llm_eval_system.experiments import Experiment
 import pytest
+
+from llm_eval_system.experiments import Experiment
 
 
 def test_assignment_is_stable():

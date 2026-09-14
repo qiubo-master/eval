@@ -14,13 +14,15 @@ dependencies = [
   "pydantic-settings>=2.4,<3",
   "httpx>=0.27,<1",
   "openai>=1.40,<2",
-  "langfuse>=3.63,<4",
+  "langfuse>=3.9,<4",
 ]
 
 [project.optional-dependencies]
 eval = [
   "deepeval>=3,<4",
-  "ragas>=0.3,<1",
+  "ragas>=0.3,<0.4",
+  "langchain>=0.3,<1",
+  "langchain-community>=0.3,<0.4",
   "datasets>=3,<5",
   "pandas>=2.2,<3",
 ]
@@ -30,7 +32,7 @@ dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<1", "ruff>=0.6,<1"]
 packages = ["src/llm_eval_system"]
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 testpaths = ["tests"]
 
 [tool.ruff]

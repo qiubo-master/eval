@@ -2,7 +2,6 @@ import hashlib
 from dataclasses import dataclass
 from typing import Literal
 
-
 Variant = Literal["A", "B"]
 
 

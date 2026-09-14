@@ -1,4 +1,5 @@
 import json
+import urllib.error
 import urllib.request
 
 
@@ -21,6 +22,5 @@ def call_api(prompt, options, context):
         with urllib.request.urlopen(request, timeout=60) as response:
             body = json.loads(response.read())
         return {"output": body["answer"], "metadata": {"trace_id": body["trace_id"]}}
-    except Exception as exc:
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, KeyError) as exc:
         return {"error": str(exc)}
-
