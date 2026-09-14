@@ -3,7 +3,16 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
-Scenario = Literal["customer_service", "operations_agent"]
+Scenario = Literal[
+    "customer_service",
+    "operations_agent",
+    "knowledge_qa",
+    "financial_analyst",
+    "medical_triage",
+    "legal_compliance",
+    "data_analyst",
+    "coding_assistant",
+]
 
 
 class ChatRequest(BaseModel):
@@ -28,4 +37,3 @@ class FeedbackRequest(BaseModel):
     resolved: bool | None = None
     csat: int | None = Field(default=None, ge=1, le=5)
     comment: str | None = Field(default=None, max_length=2_000)
-

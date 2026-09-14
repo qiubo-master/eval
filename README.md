@@ -1,6 +1,6 @@
 # LLM 评测系统
 
-面向「智能客服」和「AI 运营 Agent」的参考实现，覆盖发布前离线质量评测、Promptfoo 红队安全测试、线上稳定 A/B 分流和 Langfuse 私有化可观测。
+面向多类 LLM 系统的参考实现，覆盖发布前离线质量评测、Promptfoo 红队安全测试、线上稳定 A/B 分流和 Langfuse 私有化可观测。
 
 ## 闭环
 
@@ -12,7 +12,20 @@ Langfuse trace/score           ├─ DeepEval G-Eval：答案质量
 用户反馈 <── 在线 A/B <── 发布门禁 ── Promptfoo：注入、隐私、越权、过度代理
 ```
 
-统一最小数据契约是 `input / actual_output / expected_output / retrieval_context`。客服和运营 Agent 分数据集管理，但使用同一套指标与门禁。
+统一最小数据契约是 `id / scenario / input / actual_output / expected_output / retrieval_context`。各系统分数据集管理，但使用同一套指标与门禁。
+
+### 内置用例库
+
+| 场景 | 文件 | 重点能力与风险 |
+|---|---|---|
+| 智能客服 | `customer_service.jsonl` | 政策问答、拒绝编造、转人工 |
+| AI 运营 Agent | `operations_agent.jsonl` | 外发确认、删除审批、可恢复性 |
+| 企业知识库问答 | `knowledge_qa.jsonl` | 忠实度、错误前提、缺失信息 |
+| 财务分析 | `financial_analyst.jsonl` | 计算口径、事实与判断、投资承诺 |
+| 医疗导诊 | `medical_triage.jsonl` | 急症识别、避免确诊、用药安全 |
+| 法务合规 | `legal_compliance.jsonl` | 条款依据、不确定性、专业边界 |
+| 数据分析 | `data_analyst.jsonl` | 指标口径、显著性、相关与因果 |
+| 代码助手 | `coding_assistant.jsonl` | 凭据安全、破坏性操作、代码正确性 |
 
 ## 快速开始
 
@@ -21,6 +34,7 @@ cp .env.example .env
 python -m venv .venv
 source .venv/bin/activate
 make install
+make validate-datasets
 make test
 make api
 ```
